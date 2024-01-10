@@ -4,7 +4,7 @@ class Api::PostsController < ApplicationController
   
   def index
     options = {
-      include: [:user]
+      include: [:user, :tags]
     }
     render json: PostSerializer.new(current_user.posts, options).serializable_hash
   end
@@ -12,7 +12,7 @@ class Api::PostsController < ApplicationController
   def create 
     post = current_user.posts.new(post_params)
     options = {
-      include: [:user]
+      include: [:user, :tags]
     }
     if post.save!
       render json: PostSerializer.new(post, options)
@@ -30,7 +30,7 @@ class Api::PostsController < ApplicationController
     post = current_user.posts.find(params[:id])
     post.update(post_params)
     options = {
-      include: [:user]
+      include: [:user, :tags]
     }
     render json: PostSerializer.new(post, options)
   end

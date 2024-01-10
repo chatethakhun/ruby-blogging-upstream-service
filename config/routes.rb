@@ -16,6 +16,7 @@ Rails.application.routes.draw do
     resources :posts do
       resources :comments
       resources :likes, only: [:create, :destroy]
+      post '/tags/:tag_id', to: 'tags#add_to_post', as: :add_tag
     end
 
     resources :comments do

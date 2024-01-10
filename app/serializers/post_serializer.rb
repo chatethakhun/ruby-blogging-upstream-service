@@ -14,6 +14,6 @@ class PostSerializer
 
   belongs_to :user, serializer: :user
 
-  has_many :post_tags, if: Proc.new { |record| record.likes.any? }
+  has_many :tags
   
 end
