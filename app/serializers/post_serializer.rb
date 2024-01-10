@@ -6,7 +6,7 @@ class PostSerializer
   meta do |post|
     {
       comment_count: post.comments.count,
-      like_count: post.likes.post_likes.count,
+      like_count: post.likes.count,
     }
   end
 
@@ -14,8 +14,6 @@ class PostSerializer
 
   belongs_to :user, serializer: :user
 
-  has_many :comments, serializer: :comment, if: Proc.new { |record| record.comments.any? }
-  has_many :likes, if: Proc.new { |record| record.likes.any? }
-  has_many :post_tags, if: Proc.new { |record| record.post_tags.any? }
+  has_many :post_tags, if: Proc.new { |record| record.likes.any? }
   
 end
