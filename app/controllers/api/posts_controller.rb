@@ -3,14 +3,14 @@ class Api::PostsController < ApplicationController
   before_action :authenticate_user!
   
   def index
-    render json: current_user.posts, each_serializer: PostSerializer
+    render json: PostSerializer.new(current_user.posts).serializable_hash
   end
 
   def create 
     post = current_user.posts.new(post_params)
 
     if post.save!
-      render json: post, serializer: PostSerializer
+      render json: PostSerializer.new(post)
     else
       render json: { error: post.errors.full_messages }, status: :unprocessable_entity
     end
@@ -25,7 +25,7 @@ class Api::PostsController < ApplicationController
     post = current_user.posts.find(params[:id])
     post.update(post_params)
 
-    render json: post, serializer: PostSerializer
+    render json: PostSerializer.new(post)
   end
 
   private 

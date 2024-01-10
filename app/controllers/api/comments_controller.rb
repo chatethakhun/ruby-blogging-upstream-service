@@ -4,14 +4,14 @@ class Api::CommentsController < ApplicationController
   def index
     comments = @post.comments
 
-    render json: comments, each_serializer: CommentSerializer
+    render json: CommentSerializer.new(comments)
   end
 
   def create
     comment = @post.comments.new(comment_params)
     comment.user = current_user
     if comment.save!
-      render json: comment, serializer: CommentSerializer
+      render json: CommentSerializer.new(comment)
     else
       render json: { error: comment.errors.full_messages }, status: :unprocessable_entity
     end
@@ -22,7 +22,7 @@ class Api::CommentsController < ApplicationController
     comment = @post.comments.find(params[:id])
     comment.update(comment_params)
 
-    render json: comment, serializer: CommentSerializer
+    render json: CommentSerializer.new(comment)
   end
 
   def destroy
