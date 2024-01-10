@@ -27,6 +27,18 @@ class Api::TagsController < ApplicationController
     end
   end
 
+  def remove_from_post
+    @post = Post.find(params[:post_id])
+    @tag = Tag.find(params[:tag_id])
+
+    if @post.tags.include?(@tag)
+      @post.tags.delete(@tag)
+      render json: { message: 'Tag removed from the post successfully' }
+    else
+      render json: { error: 'Tag not found on the post' }, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def tag_params
