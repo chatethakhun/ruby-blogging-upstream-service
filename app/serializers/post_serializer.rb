@@ -6,7 +6,7 @@ class PostSerializer
   meta do |post|
     {
       comment_count: post.comments.count,
-      like_count: post.likes.count,
+      like_count: post.likes.post_likes.count,
     }
   end
 
