@@ -22,7 +22,7 @@ Rails.application.routes.draw do
       resources :likes, only: [:index, :create, :destroy]
     end
 
-    resources :tags, only: [:index, :show, :create, :update, :destroy]
+    resources :tags, only: [:index, :create]
 
     resources :users do
       resources :likes, only: [:index]
