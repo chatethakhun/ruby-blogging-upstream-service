@@ -12,5 +12,20 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
-  get "/", to: "application#hello"
+  namespace :api do
+    resources :posts do
+      resources :comments
+      resources :likes, only: [:index, :create, :destroy]
+    end
+
+    resources :comments do
+      resources :likes, only: [:index, :create, :destroy]
+    end
+
+    resources :tags, only: [:index, :show, :create, :update, :destroy]
+
+    resources :users do
+      resources :likes, only: [:index]
+    end
+  end
 end
