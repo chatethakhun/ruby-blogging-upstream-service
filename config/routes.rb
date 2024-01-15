@@ -28,6 +28,9 @@ Rails.application.routes.draw do
 
     resources :users do
       resources :likes, only: [:index]
+      collection do 
+        put '/upload_attachment', to: 'users#upload_attachment'
+      end
     end
 
     resources :upload, only: [:create]
