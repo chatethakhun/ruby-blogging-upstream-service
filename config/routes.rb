@@ -29,5 +29,7 @@ Rails.application.routes.draw do
     resources :users do
       resources :likes, only: [:index]
     end
+
+    resources :upload, only: [:create]
   end
 end
