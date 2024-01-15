@@ -2,14 +2,14 @@ class Api::TagsController < ApplicationController
   before_action :authenticate_user!
 
   def index 
-    render json: TagSerializer.new(Tag.all).serializable_hash
+    @tags = Tag.all
   end
 
   def create
-    tag = Tag.new(tag_params)
+    @tag = Tag.new(tag_params)
 
-    if tag.save!
-      render json: TagSerializer.new(tag).serializable_hash
+    if @tag.save!
+      @tag
     else
       render json: { error: tag.errors.full_messages }, status: :unprocessable_entity
     end
@@ -23,7 +23,7 @@ class Api::TagsController < ApplicationController
       render json: { error: 'Tag already added to the post' }, status: :unprocessable_entity
     else
       @post.tags << @tag
-      render json: TagSerializer.new(@tag).serializable_hash, status: :created
+      @tag
     end
   end
 
