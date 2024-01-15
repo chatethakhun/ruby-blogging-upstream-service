@@ -1,21 +1,20 @@
 class Api::PostsController < ApplicationController
-  respond_to :json
+  # respond_to :json
   before_action :authenticate_user!
   
   def index
     options = {
       include: [:user, :tags]
     }
-    render json: PostSerializer.new(current_user.posts, options).serializable_hash
+
+    @posts = current_user.posts
+
   end
 
   def create 
-    post = current_user.posts.new(post_params)
-    options = {
-      include: [:user, :tags]
-    }
-    if post.save!
-      render json: PostSerializer.new(post, options)
+    @post = current_user.posts.new(post_params)
+    if @post.save!
+      @post
     else
       render json: { error: post.errors.full_messages }, status: :unprocessable_entity
     end
