@@ -1,4 +1,3 @@
-# require './modules/file_io'
 class Api::UploadController < ApplicationController
   before_action :authenticate_user!
   def create
